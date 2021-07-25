@@ -1,0 +1,129 @@
+@keyframes showFlag
+  0%
+    transform: scale(0)
+  100%
+    transform: scale(1)
+    
+  
+.game-component
+  width: 700px
+  height: 600px
+
+  border-radius: 10px
+  border: 1px solid #999
+
+  background-color: #fff
+  box-shadow: 0 0 40px #000
+
+  position: relative
+  
+  display: flex
+  flex-direction: column
+
+  .game-header
+    display: flex
+    height: 60px
+    align-items: center
+    border-bottom: 1px solid #999
+    box-shadow: 0px 3px 10px #000
+
+    .panel
+      flex-grow: 1
+
+  .game-content
+    position: relative
+    overflow: hidden
+    flex-grow: 1
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #ddd
+    color: #333
+    
+  .game-start
+    position: absolute
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100%
+    height: 100%
+    z-index: 9
+    background-color: rgba(0,0,0,.5)
+    
+    .game-window
+      padding: 20px
+      border-radius: 5px
+      background-color: #fff
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+
+  .display
+    display: flex
+    position: absolute
+    opacity: 0
+
+    flex-direction: column
+
+    margin: auto
+
+    .row
+      display: flex
+      flex-direction: row
+
+      .item
+        width: 20px
+        height: 20px
+
+        display: inline-block
+
+        border: 1px solid #fff
+        margin: 2px
+
+        display: flex
+
+        justify-content: center
+        align-items: center
+        position: relative
+
+        i[data-bomb]
+          display: inline-block
+          width: 100%
+          height: 100%
+          background: url(img/bomb.png)
+          background-color: #f00
+          background-position: center
+          background-size: 80%
+          background-repeat: no-repeat
+          
+        b
+          display: inline-block
+          width: 100%
+          height: 100%
+          background-color: #777
+          cursor: pointer
+          position: relative
+
+          &::before
+            display: inline-block
+            content: ' '
+            position: absolute
+            background: url(img/close.png)
+            background-position: center
+            background-size: cover
+            top: 0
+            left: 0
+            right: 0
+            bottom: 0
+            margin: auto
+            transform: scale(0)
+            transition: 0.2s
+
+          &[data-null="true"]
+            background-color: #7f7
+
+          &[data-bomb="true"]
+            background-color: #f77
+
+          &[data-flag="true"]::before
+            transform: scale(1)

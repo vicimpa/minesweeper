@@ -1,0 +1,19 @@
+.center-component
+  width: 100%
+  height: 100%
+
+  display: flex
+
+  justify-content: center
+  align-items: center
+
+  position: relative
+
+  &[data-direction="row"]
+    flex-direction: row
+  &[data-direction="row-reverse"]
+    flex-direction: row-reverse
+  &[data-direction="column"]
+    flex-direction: column
+  &[data-direction="column-reverse"]
+    flex-direction: column-reverse

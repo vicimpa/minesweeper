@@ -1,0 +1,24 @@
+.text-component
+  margin: 0
+  margin-bottom: 5px
+
+  &[data-color="primary"]
+    color: #333
+
+  &[data-color="secondary"]
+    color: #ddd
+
+  &[data-align="left"]
+    text-align: left
+
+  &[data-align="center"]
+    text-align: center
+  
+  &[data-right="right"]
+    text-align: right
+
+  @for $i from 1 through 6
+    &[data-size="#{$i}"]
+      font-size: 36px - $i * 4px
+      font-weight: 900 - $i * 100
+

@@ -1,0 +1,43 @@
+@keyframes modalShow
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+@keyframes windowShow
+  0%
+    transform: translateY(-400px) scale(0.8)
+  100%
+    transform: translateY(0px) scale(1)
+    
+
+.modal-component
+  --time: 0.2s
+  position: absolute
+
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+
+  overflow: hidden
+
+  animation: modalShow var(--time)
+  background-color: rgba(0,0,0,0.6)
+
+  display: flex
+  flex-direction: column
+
+  justify-content: center
+  align-items: center
+
+  &[data-fullscreen="true"]
+    position: fixed
+    
+  .modal-window
+    background-color: #fff
+    border-radius: 5px
+    box-shadow: 0 0 10px #000
+    padding: 20px
+
+    animation: windowShow var(--time)
