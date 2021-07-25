@@ -1,4 +1,4 @@
-# Сапёр на TypeScript
+# Сапёр на TypeScript/React
 
 ### Для запуска
 ```bash
