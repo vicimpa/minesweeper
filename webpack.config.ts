@@ -47,7 +47,7 @@ module.exports = {
   },
   output: {
     path: join(__dirname, 'dist'),
-    publicPath: 'dist/'
+    publicPath: (isServeMode ? '/' : '') + 'dist/'
   },
   externals: {
     'react': 'React',

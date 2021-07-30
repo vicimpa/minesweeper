@@ -7,6 +7,8 @@ interface IRow {
 
 const devMode = makeSharedState(false)
 
+export const helperMode = makeSharedState(false)
+
 export class MineSweeper {
   #subs = makeSharedState(false)
   #start = makeSharedState(false)
@@ -14,6 +16,8 @@ export class MineSweeper {
   width = 0
   height = 0
   length = 0
+
+  isGenerated = false
 
   map: Int8Array
   opens = new Map<string, boolean>()
@@ -23,8 +27,8 @@ export class MineSweeper {
   stopTime = -1
 
   get timeString() {
-    if(this.startTime == -1)
-      return 0 .toFixed(2)
+    if (this.startTime == -1)
+      return (0).toFixed(2)
 
     const end = this.stopTime == -1 ? performance.now() : this.stopTime
     return ((end - this.startTime) / 1000).toFixed(2)
@@ -35,7 +39,7 @@ export class MineSweeper {
   get devMode() { return DEVMODE && devMode.state }
   get started() { return this.#start.state }
   set started(v) { this.#start.setState(v) }
-  get flugsCount() { return [...this.flags.values()].filter(e => e).length}
+  get flugsCount() { return [...this.flags.values()].filter(e => e).length }
   get opensCount() { return [...this.opens.values()].filter(e => e).length }
 
   isOpen(x: number, y: number) {
@@ -67,23 +71,23 @@ export class MineSweeper {
   }
 
   setOpen(x: number, y: number) {
-    if(!this.started)
+    if (!this.started)
       return
 
-
+    this.generate(x, y)
     this.clear(x, y)
     this.checkWin(x, y)
     this.render()
   }
 
   checkWin(x: number, y: number) {
-    if(this.map[this.index([x,y])] == -1 && this.isOpen(x, y)) {
+    if (this.map[this.index([x, y])] == -1 && this.isOpen(x, y)) {
       this.started = false
       this.state = 1
       this.stopTime = performance.now()
     }
 
-    if(
+    if (
       this.opensCount + this.length == this.map.length ||
       (this.flugsCount == this.length && [...this.flags.entries()].filter(([key]) => {
         const [x, y] = key.split(':').map(e => +e)
@@ -103,7 +107,7 @@ export class MineSweeper {
   toggleFlag(x: number, y: number) {
     const v = !this.isFlag(x, y)
 
-    if(v && !(this.length - this.flugsCount))
+    if (v && !(this.length - this.flugsCount))
       return
 
     this.flags.set(`${x}:${y}`, v)
@@ -168,10 +172,32 @@ export class MineSweeper {
 
     if (length >= this.map.length)
       throw new Error('Length bomb bigger length map')
+  }
+
+  generate(x: number, y: number) {
+    if (this.isGenerated)
+      return
+
+    this.isGenerated = true
+
+    let { length } = this
+    let indexes: number[] = []
+
+    if (helperMode.state) {
+      for (let X = -1; X <= 1; X++) {
+        for (let Y = -1; Y <= 1; Y++) {
+          let v = this.index([x + X, y + Y])
+
+          if (indexes.indexOf(v) == -1)
+            indexes.push(v)
+        }
+      }
+    }
 
     while (length > 0) {
       const index = [...this.map].map((e, i) => i)
         .filter(e => !this.map[e])
+        .filter(e => indexes.indexOf(e) == -1)
         .sort(() => Math.random() > 0.5 ? 1 : -1)[0]
 
       this.map[index] = -1
@@ -211,7 +237,7 @@ export class MineSweeper {
   }
 
   start() {
-    if(this.state == 0) {
+    if (this.state == 0) {
       this.startTime = performance.now()
       this.started = true
     }
