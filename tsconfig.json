@@ -1,13 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "jsx": "react",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "inlineSourceMap": true,
-    "baseUrl": "./",
-    "resolveJsonModule": true
-  }
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "allowJs": false,
+    "skipLibCheck": false,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./src"
+  },
+  "include": [
+    "./src"
+  ]
 }
