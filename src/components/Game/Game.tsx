@@ -44,6 +44,10 @@ export const Item: FC<IItem> = ({ x, y, v, game }) => {
     game.toggleFlag(x, y);
   };
 
+  const chordClick: MouseEventHandler = (e) => {
+    game.chordClick(x, y);
+  };
+
   return (
     <div className={'item'}>
       <Choose>
@@ -53,7 +57,7 @@ export const Item: FC<IItem> = ({ x, y, v, game }) => {
               <i data-bomb />
             </When>
             <When condition={v}>
-              <i>{v}</i>
+              <i onClick={chordClick} data-number={v}>{v}</i>
             </When>
           </Choose>
         </When>

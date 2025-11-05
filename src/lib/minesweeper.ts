@@ -82,6 +82,50 @@ export class MineSweeper {
     this.render();
   }
 
+  chordClick(x: number, y: number) {
+    if (!this.started)
+      return;
+
+    // Only works on opened cells
+    if (!this.isOpen(x, y))
+      return;
+
+    const cellValue = this.map[this.index([x, y])];
+
+    // Only works on numbered cells (not bombs or empty cells)
+    if (cellValue <= 0)
+      return;
+
+    // Count flags around this cell
+    let flagCount = 0;
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        if (dx === 0 && dy === 0) continue;
+        if (this.isFlag(x + dx, y + dy)) {
+          flagCount++;
+        }
+      }
+    }
+
+    // If flag count matches the cell number, open all non-flagged cells around it
+    if (flagCount === cellValue) {
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          if (dx === 0 && dy === 0) continue;
+          const nx = x + dx;
+          const ny = y + dy;
+
+          // Only open cells that are not flagged and not already open
+          if (!this.isFlag(nx, ny) && !this.isOpen(nx, ny)) {
+            this.clear(nx, ny);
+            this.checkWin(nx, ny);
+          }
+        }
+      }
+      this.render();
+    }
+  }
+
   checkWin(x: number, y: number) {
     if (this.map[this.index([x, y])] == -1 && this.isOpen(x, y)) {
       this.started = false;
