@@ -57,7 +57,7 @@ export const Item: FC<IItem> = ({ x, y, v, game }) => {
               <i data-bomb />
             </When>
             <When condition={v}>
-              <i onClick={chordClick}>{v}</i>
+              <i onClick={chordClick} data-number={v}>{v}</i>
             </When>
           </Choose>
         </When>
